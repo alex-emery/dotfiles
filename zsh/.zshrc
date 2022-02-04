@@ -109,7 +109,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim=nvim
-
+export EDITOR=vim
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
@@ -118,7 +118,8 @@ bindkey -M vicmd 'j' history-substring-search-down
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(lua ${ZSH_CUSTOM}/plugins/z.lua/z.lua --init zsh fzf)"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+source /usr/share/nvm/init-nvm.sh
 
+# GO
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
