@@ -50,5 +50,12 @@ use 'hrsh7th/cmp-nvim-lsp'
     config = function() require'nvim-tree'.setup {} end
 }
 
+use {'rrethy/vim-hexokinase', run='make'}
+use({
+	"catppuccin/nvim",
+	as = "catppuccin"
+})
+
 end)
+
 -- https://github.com/tomaskallup/dotfiles/tree/master/nvim/lua/plugins
