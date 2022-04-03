@@ -7,7 +7,10 @@ return require('packer').startup(function()
     require 'plugins.nvim-lspconfig'
   end }
 
-use 'hrsh7th/cmp-nvim-lsp'
+  -- Auto Completion
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/vim-vsnip'
 
   use { 'hrsh7th/nvim-cmp', config = function() 
 	  require 'plugins.nvim-cmp'
@@ -50,5 +53,12 @@ use 'hrsh7th/cmp-nvim-lsp'
     config = function() require'nvim-tree'.setup {} end
 }
 
+use {'rrethy/vim-hexokinase', run='make'}
+use({
+	"catppuccin/nvim",
+	as = "catppuccin"
+})
+
 end)
+
 -- https://github.com/tomaskallup/dotfiles/tree/master/nvim/lua/plugins
