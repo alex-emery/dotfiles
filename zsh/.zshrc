@@ -120,7 +120,7 @@ eval "$(lua ${ZSH_CUSTOM}/plugins/z.lua/z.lua --init zsh fzf)"
 
 source /usr/share/nvm/init-nvm.sh
 
-# GO
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+export PATH=$PATH:${HOME}.local/bin
