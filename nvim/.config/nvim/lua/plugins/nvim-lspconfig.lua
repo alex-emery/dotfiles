@@ -30,11 +30,13 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-
+    
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
   
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -47,11 +49,14 @@ lspconfig.gopls.setup {
       gopls = {
         analyses = {
           unusedparams = true,
+          shadow = true,
         },
         staticcheck = true,
       },
-
-    },
+   },
+   init_options = {
+     usePlaceholders = true,
+   }
 }
 
 lspconfig.tsserver.setup {
@@ -64,10 +69,10 @@ function OrgImports(wait_ms)
   local params = vim.lsp.util.make_range_params()
   params.context = {only = {"source.organizeImports"}}
   local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
-  for _, res in pairs(result or {}) do
+  for client_id, res in pairs(result or {}) do
     for _, r in pairs(res.result or {}) do
       if r.edit then
-        vim.lsp.util.apply_workspace_edit(r.edit)
+        vim.lsp.util.apply_workspace_edit(r.edit, vim.lsp.get_client_by_id(client_id).offset_encoding)
       else
         vim.lsp.buf.execute_command(r.command)
       end
@@ -76,3 +81,4 @@ function OrgImports(wait_ms)
 end
 
 vim.api.nvim_command("au BufWritePre *.go lua OrgImports(1000)") 
+
