@@ -59,6 +59,13 @@ use({
 	as = "catppuccin"
 })
 
+use {'mfussenegger/nvim-lint', 
+    config = function()
+        require('lint').linters_by_ft = {
+            golang = {'golangcilint',}
+        }
+    end
+}
 end)
 
 -- https://github.com/tomaskallup/dotfiles/tree/master/nvim/lua/plugins
