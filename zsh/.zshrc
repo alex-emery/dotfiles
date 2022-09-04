@@ -129,3 +129,8 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 export PATH=$PATH:${HOME}.local/bin
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+
+source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"

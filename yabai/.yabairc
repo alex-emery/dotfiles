@@ -50,7 +50,7 @@ yabai -m rule --add app='Messages' manage=off
 yabai -m rule --add app='Installer' manage=off
 
 yabai -m rule --add app='Archive Utility' manage=off
-
+yabai -m rule --add app='DevUtils' manage=off
 #Spacebar Bugger Bar
 SPACEBAR_HEIGHT=$(spacebar -m config height)
 yabai -m config external_bar all:$SPACEBAR_HEIGHT:0
