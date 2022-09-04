@@ -21,8 +21,15 @@ return require('packer').startup(function()
         require 'plugins.nvim-dap'
     end }
 
-    use 'leoluz/nvim-dap-go'
-
+    use { 'leoluz/nvim-dap-go', config = function()
+        require('dap-go').setup()
+    end }
+    use { "theHamsta/nvim-dap-virtual-text", config = function()
+        require 'plugins.nvim-dap-virtual-text'
+    end }
+    use { "rcarriga/nvim-dap-ui", config = function()
+        require 'plugins.nvim-dap-ui' 
+    end }
     -- fzf
     use {'junegunn/fzf', run = 'fzf#install()' }
     use 'junegunn/fzf.vim'
