@@ -71,7 +71,9 @@ return require('packer').startup(function()
     -- use {'rrethy/vim-hexokinase', run='make'}
 
     -- themes
-    -- use 'folke/tokyonight.nvim'
+    use { 'folke/tokyonight.nvim', config = function()
+        vim.cmd[[colorscheme tokyonight]]
+    end }
 
 end)
 
