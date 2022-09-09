@@ -1,12 +1,28 @@
 return require('packer').startup(function()
     use  { 'wbthomason/packer.nvim' }
 
+    -- Tree sitter and Friends
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/playground'
     use { 'nvim-treesitter/nvim-treesitter-context', config = function()
         require 'treesitter-context'.setup{}
     end }
-
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
+    use { "lukas-reineke/indent-blankline.nvim", config = function()
+        vim.opt.list = true
+        vim.opt.listchars:append "space:⋅"
+        vim.opt.listchars:append "eol:↴"
+        require("indent_blankline").setup {
+            space_char_blankline = " ",
+            show_current_context = true,
+            show_current_context_start = true,
+        }
+    end }
     -- LSP and Friends
     use { 'neovim/nvim-lspconfig', config = function()
         require 'plugins.nvim-lspconfig'
@@ -23,7 +39,18 @@ return require('packer').startup(function()
         require('lint').linters_by_ft = {
             golang = {'golangcilint',}
         }
-    end}
+        vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+            callback = function()
+                require("lint").try_lint()
+            end,
+        })
+        vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+            callback = function()
+                require("lint").try_lint()
+            end,
+        })
+
+    end }
     -- Debugger
     use { 'mfussenegger/nvim-dap', config = function()
         require 'plugins.nvim-dap'
