@@ -78,10 +78,15 @@ return require('packer').startup(function()
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use {'nvim-telescope/telescope-dap.nvim' }
 
+    -- Git stuff
+    use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = function()
+        require('neogit').setup{}
+    end}
+
     -- Vim dispatch
-    use { 'tpope/vim-dispatch' }
+    -- use { 'tpope/vim-dispatch' }
     -- Fugitive for Git
-    use { 'tpope/vim-fugitive' }
+    -- use { 'tpope/vim-fugitive' }
     -- Seamless tmux navigation
     use 'christoomey/vim-tmux-navigator'
 

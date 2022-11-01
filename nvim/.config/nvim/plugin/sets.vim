@@ -10,3 +10,4 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 
+set mouse=n
