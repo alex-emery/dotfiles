@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 # General Icons
 LOADING=􀖇
@@ -6,8 +6,6 @@ APPLE=􀣺
 PREFERENCES=􀺽
 ACTIVITY=􀒓
 LOCK=􀒳
-MAIL=􀍜
-MAIL_OPEN=􀍜
 BELL=􀋚
 BELL_DOT=􀝗
 
@@ -31,3 +29,11 @@ YABAI_FULLSCREEN_ZOOM=􀏜
 YABAI_PARENT_ZOOM=􀥃
 YABAI_FLOAT=􀢌
 YABAI_GRID=􀧍
+
+# Battery Icons
+BATTERY_100=􀛨
+BATTERY_75=􀺸
+BATTERY_50=􀺶
+BATTERY_25=􀛩
+BATTERY_0=􀛪
+BATTERY_CHARGING=􀢋
