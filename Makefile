@@ -13,10 +13,8 @@ endif
 dotfiles: brew 
 	@stow alacritty
 	@stow nvim
-	@stow spacebar
+	@stow sketchybar 
 	@stow skhd 
 	@stow yabai
 	@stow tmux
 	@stow zsh
-
-
