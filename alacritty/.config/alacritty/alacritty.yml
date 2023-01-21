@@ -1,5 +1,5 @@
 window:
-  opacity: 0.8  
+  opacity: 0.8
   padding:
     x: 10
     y: 10
@@ -8,14 +8,23 @@ window:
     x: 10 
     y: 10 
   decorations: none
+dynamic_title: true
 
 scrolling: 
   history: 10000
   multiplier: 3
 font:
   normal:
-    family: "OperatorMonoSSM Nerd Font"
-    style: "Book"
+    family: "Liga SFMono Nerd Font"
+  bold:
+    family: "Liga SFMono Nerd Font"
+    style: Bold
+  italic:
+    family: "Liga SFMono Nerd Font"
+    style: Italic
+  bold_italic:
+    family: "Liga SFMono Nerd Font"
+    style: Bold Italic
 
 # Catppuccin!
 colors:
