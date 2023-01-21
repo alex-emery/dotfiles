@@ -87,10 +87,6 @@ return require('packer').startup(function()
         require('neogit').setup{}
     end}
 
-    -- Vim dispatch
-    -- use { 'tpope/vim-dispatch' }
-    -- Fugitive for Git
-    -- use { 'tpope/vim-fugitive' }
     -- Seamless tmux navigation
     use 'christoomey/vim-tmux-navigator'
 
@@ -103,8 +99,6 @@ return require('packer').startup(function()
         config = function() require'nvim-tree'.setup {} end,
         tag = 'nightly' -- optional, updated every week. (see issue #1193)
     }
-
-    -- use {'rrethy/vim-hexokinase', run='make'}
 
     -- themes
     use { 'folke/tokyonight.nvim', config = function()
