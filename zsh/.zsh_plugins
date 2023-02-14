@@ -68,13 +68,15 @@ repos=(
   ohmyzsh/ohmyzsh
 
   # regular plugins
-  sindresorhus/pure
   romkatv/zsh-defer
   zsh-users/zsh-autosuggestions
   zsh-users/zsh-history-substring-search
   zdharma-continuum/fast-syntax-highlighting
   Aloxaf/fzf-tab
   jeffreytse/zsh-vi-mode
+
+  #theme
+  romkatv/powerlevel10k
 )
 
 plugin-clone $repos
@@ -85,8 +87,8 @@ export PATH="$ZPLUGINDIR/zsh-bench:$PATH"
 
 # source other plugins
 beforeCompInit=(
+  powerlevel10k # theme
   zsh-defer # everything after this is "deferred"
-  pure # theme
   zsh-utils/history
   zsh-utils/completion
   zsh-utils/utility
@@ -124,5 +126,3 @@ afterCompInit=(
 
 plugin-source $afterCompInit
 
-autoload -U promptinit; promptinit
-prompt pure
