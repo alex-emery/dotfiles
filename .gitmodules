@@ -1,15 +1,3 @@
-[submodule "ohmyzsh/custom/plugins/fzf-tab"]
-	path = ohmyzsh/custom/plugins/fzf-tab
-	url = https://github.com/Aloxaf/fzf-tab
-[submodule "ohmyzsh/custom/plugins/zsh-history-substring-search"]
-	path = ohmyzsh/custom/plugins/zsh-history-substring-search
-	url = https://github.com/zsh-users/zsh-history-substring-search
-[submodule "ohmyzsh/custom/plugins/zsh-autosuggestions"]
-	path = ohmyzsh/custom/plugins/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "ohmyzsh/custom/plugins/z.lua"]
-	path = ohmyzsh/custom/plugins/z.lua
-	url = https://github.com/skywind3000/z.lua
 [submodule "tmux/.config/tmux/plugins/tpm"]
 	path = tmux/.config/tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
