@@ -2,21 +2,10 @@ source ${HOME}/.zsh_plugins
 
 setopt histignorealldups
 
-#plugins=(
-#    git
-#    docker
-#    kubectl
-#    vi-mode
-#    fzf-tab
-#    zsh-history-substring-search
-#    zsh-autosuggestions
-#    pyenv
-#)
-
 alias vim=nvim
 export EDITOR=vim
 
-#eval "$(lua ${ZSH_CUSTOM}/plugins/z.lua/z.lua --init zsh fzf)"
+source ~/.fzf.zsh 
 
 [ -s "/usr/share/nvm/init-nvm.sh" ] && source /usr/share/nvm/init-nvm.sh
 

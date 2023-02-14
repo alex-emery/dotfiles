@@ -1,9 +1,34 @@
+# the core of this is 100% stolen from https://github.com/mattmc3/zsh_unplugged
+
 # You can also separate the clone and load portions for more advanced plugin loads
 
 # where should we download your Zsh plugins?
 ZPLUGINDIR=${ZDOTDIR:-$HOME/.config/zsh}/plugins
 
+# ohmyzsh wants a cache dir for things
 export ZSH_CACHE_DIR=/Users/xanderle/.config/zsh/plugins/ohmyzsh/cache
+# and cache/completion to exist for things like kubectl completion
+[ -d $ZPLUGINDIR/ohmyzsh/cache/completions ] || mkdir $ZPLUGINDIR/ohmyzsh/cache/completions
+fpath+=$ZPLUGINDIR/ohmyzsh/cache/completions
+
+### Helpers
+function plugin-update {
+  ZPLUGINDIR=${ZPLUGINDIR:-$HOME/.config/zsh/plugins}
+  for d in $ZPLUGINDIR/*/.git(/); do
+    echo "Updating ${d:h:t}..."
+    command git -C "${d:h}" pull --ff --recurse-submodules --depth 1 --rebase --autostash
+  done
+}
+
+function plugin-compile {
+  ZPLUGINDIR=${ZPLUGINDIR:-$HOME/.config/zsh/plugins}
+  autoload -U zrecompile
+  local f
+  for f in $ZPLUGINDIR/**/*.zsh{,-theme}(N); do
+    zrecompile -pq "$f"
+  done
+}
+
 # declare a simple plugin-clone function, leaving the user to load plugins themselves
 function plugin-clone {
   local repo plugdir initfile
@@ -35,7 +60,6 @@ function plugin-source {
 
 # make a github repo plugins list
 repos=(
-  sindresorhus/pure
   # not-sourcable plugins
   romkatv/zsh-bench
 
@@ -44,6 +68,8 @@ repos=(
   ohmyzsh/ohmyzsh
 
   # regular plugins
+  sindresorhus/pure
+  romkatv/zsh-defer
   zsh-users/zsh-autosuggestions
   zsh-users/zsh-history-substring-search
   zdharma-continuum/fast-syntax-highlighting
@@ -58,44 +84,45 @@ export PATH="$ZPLUGINDIR/zsh-bench:$PATH"
 
 
 # source other plugins
-before=(
-  pure
+beforeCompInit=(
+  zsh-defer # everything after this is "deferred"
+  pure # theme
   zsh-utils/history
   zsh-utils/completion
   zsh-utils/utility
-
+  zsh-vi-mode
+    
+  ## omz plugins
   ohmyzsh/plugins/history-substring-search
   ohmyzsh/plugins/z
   ohmyzsh/plugins/docker
   ohmyzsh/plugins/kubectl
 
-  zsh-vi-mode
 )
 
-plugin-source $before
+plugin-source $beforeCompInit
 
-[ -d $ZPLUGINDIR/ohmyzsh/cache/completions ] || mkdir $ZPLUGINDIR/ohmyzsh/cache/completions
-fpath+=$ZPLUGINDIR/ohmyzsh/cache/completions
 
 
 autoload -Uz compinit
 compinit
 
 # some stuff in ohmyzsh wants access to compdef...
+# so putting it here
 # handle non-standard plugins
-for file in $ZPLUGINDIR/ohmyzsh/lib/*.zsh; do
-  source $file
-done
+#for file in $ZPLUGINDIR/ohmyzsh/lib/*.zsh; do
+#  source $file
+#done
 
 
-after=(
+afterCompInit=(
   fzf-tab # has to be after compinit && before fast-syntax-highlighting and zsh-autosuggestions
 
   fast-syntax-highlighting
   zsh-autosuggestions
 )
 
-plugin-source $after
+plugin-source $afterCompInit
 
 autoload -U promptinit; promptinit
 prompt pure
