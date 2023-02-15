@@ -6,7 +6,7 @@
 ZPLUGINDIR=${ZDOTDIR:-$HOME/.config/zsh}/plugins
 
 # ohmyzsh wants a cache dir for things
-export ZSH_CACHE_DIR=/Users/xanderle/.config/zsh/plugins/ohmyzsh/cache
+export ZSH_CACHE_DIR=${HOME}/.config/zsh/plugins/ohmyzsh/cache
 # and cache/completion to exist for things like kubectl completion
 [ -d $ZPLUGINDIR/ohmyzsh/cache/completions ] || mkdir $ZPLUGINDIR/ohmyzsh/cache/completions
 fpath+=$ZPLUGINDIR/ohmyzsh/cache/completions
