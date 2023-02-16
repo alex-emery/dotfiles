@@ -10,6 +10,7 @@ export ZSH_CACHE_DIR=${HOME}/.config/zsh/plugins/ohmyzsh/cache
 # and cache/completion to exist for things like kubectl completion
 [ -d $ZPLUGINDIR/ohmyzsh/cache/completions ] || mkdir $ZPLUGINDIR/ohmyzsh/cache/completions
 fpath+=$ZPLUGINDIR/ohmyzsh/cache/completions
+fpath+=/opt/homebrew/share/zsh/site-functions
 
 ### Helpers
 function plugin-update {
@@ -88,7 +89,6 @@ export PATH="$ZPLUGINDIR/zsh-bench:$PATH"
 # source other plugins
 beforeCompInit=(
   powerlevel10k # theme
-  zsh-defer # everything after this is "deferred"
   zsh-utils/history
   zsh-utils/completion
   zsh-utils/utility
@@ -104,25 +104,33 @@ beforeCompInit=(
 
 plugin-source $beforeCompInit
 
-
-
 autoload -Uz compinit
 compinit
 
 # some stuff in ohmyzsh wants access to compdef...
-# so putting it here
+# so putting it here.
 # handle non-standard plugins
-#for file in $ZPLUGINDIR/ohmyzsh/lib/*.zsh; do
-#  source $file
-#done
+for file in $ZPLUGINDIR/ohmyzsh/lib/*.zsh; do
+  source $file
+done
 
 
 afterCompInit=(
   fzf-tab # has to be after compinit && before fast-syntax-highlighting and zsh-autosuggestions
 
+  #zsh-defer # everything after this is "deferred". technically not needed with p10k
   fast-syntax-highlighting
   zsh-autosuggestions
 )
 
 plugin-source $afterCompInit
 
+
+## Plugin setup
+
+# history substring search bindings
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
