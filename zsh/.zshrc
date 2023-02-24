@@ -120,5 +120,23 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 export PATH=$PATH:${HOME}/.local/bin
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+    source /usr/share/nvm/nvm.sh
+    source /usr/share/nvm/bash_completion
+    source /usr/share/nvm/install-nvm-exec
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+
+    [ -s "/usr/share/nvm/init-nvm.sh" ] && source /usr/share/nvm/init-nvm.sh
+
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+    [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+    . /opt/homebrew/opt/asdf/libexec/asdf.sh
+    source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+
+fi
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
