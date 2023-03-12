@@ -89,6 +89,8 @@ plugin-source $afterCompInit
 
 ## Plugin setup
 # requires fzf
+[[ ! -f ~/.fzf.zsh ]] || source ~/.fzf.zsh 
+[[ ! -f /etc/profile.d/fzf.zsh ]] || . /etc/profile.d/fzf.zsh
 # history substring search bindings
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
