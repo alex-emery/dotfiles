@@ -1,10 +1,10 @@
 local lspconfig = require 'lspconfig'
 local configs = require("lspconfig/configs")
--- Use an on_attach function to only map the following keys 
+-- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local builtin = require('telescope.builtin')
 
-local opts = { noremap=true, silent=true }
+local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
@@ -15,7 +15,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  local bufopts = { noremap=true, silent=true, buffer=bufnr}
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gd', builtin.lsp_definitions, bufopts)
   vim.keymap.set('n', 'gr', builtin.lsp_references, bufopts)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
@@ -37,37 +37,37 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  
+
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 lspconfig.gopls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    cmd = {"gopls", "serve"},
-    settings = {
-      gopls = {
-        analyses = {
-          unusedparams = true,
-          shadow = true,
-        },
-        staticcheck = true,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = { "gopls", "serve" },
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+        shadow = true,
       },
-   },
-   init_options = {
-     usePlaceholders = true,
-   }
+      staticcheck = true,
+    },
+  },
+  init_options = {
+    usePlaceholders = true,
+  }
 }
 
 lspconfig.tsserver.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
+  on_attach = on_attach,
+  capabilities = capabilities,
 }
 
-lspconfig.rust_analyzer.setup{}
+lspconfig.rust_analyzer.setup {}
 
 function OrgImports(wait_ms)
   local params = vim.lsp.util.make_range_params()
-  params.context = {only = {"source.organizeImports"}}
+  params.context = { only = { "source.organizeImports" } }
   local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
   for client_id, res in pairs(result or {}) do
     for _, r in pairs(res.result or {}) do
@@ -80,5 +80,4 @@ function OrgImports(wait_ms)
   end
 end
 
-vim.api.nvim_command("au BufWritePre *.go lua OrgImports(1000)") 
-
+vim.api.nvim_command("au BufWritePre *.go lua OrgImports(1000)")

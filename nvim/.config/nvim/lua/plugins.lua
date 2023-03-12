@@ -1,18 +1,20 @@
 return require('packer').startup(function()
-    use  { 'wbthomason/packer.nvim' }
+    use { 'wbthomason/packer.nvim' }
 
     -- Tree sitter and Friends
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/playground'
     use { 'nvim-treesitter/nvim-treesitter-context', config = function()
-        require 'treesitter-context'.setup{}
+        require 'treesitter-context'.setup {}
     end }
+
     use {
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup()
         end
     }
+
     use { "lukas-reineke/indent-blankline.nvim", config = function()
         vim.opt.list = true
         vim.opt.listchars:append "space:⋅"
@@ -23,6 +25,7 @@ return require('packer').startup(function()
             show_current_context_start = true,
         }
     end }
+
     -- LSP and Friends
     use { 'neovim/nvim-lspconfig', config = function()
         require 'plugins.nvim-lspconfig'
@@ -35,9 +38,9 @@ return require('packer').startup(function()
         require 'plugins.nvim-cmp'
     end }
 
-    use {'mfussenegger/nvim-lint', config = function()
+    use { 'mfussenegger/nvim-lint', config = function()
         require('lint').linters_by_ft = {
-            golang = {'golangcilint',}
+            golang = { 'golangcilint', }
         }
         vim.api.nvim_create_autocmd({ "BufWritePost" }, {
             callback = function()
@@ -49,7 +52,6 @@ return require('packer').startup(function()
                 require("lint").try_lint()
             end,
         })
-
     end }
     -- Debugger
     use { 'mfussenegger/nvim-dap', config = function()
@@ -67,25 +69,25 @@ return require('packer').startup(function()
     end }
 
     -- fzf
-    use {'junegunn/fzf', run = 'fzf#install()' }
+    use { 'junegunn/fzf', run = 'fzf#install()' }
     use 'junegunn/fzf.vim'
     -- terescope
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
-            {'nvim-lua/popup.nvim'}, 
-            {'nvim-lua/plenary.nvim'},
+            { 'nvim-lua/popup.nvim' },
+            { 'nvim-lua/plenary.nvim' },
             { "nvim-telescope/telescope-live-grep-args.nvim" },
         },
         config = function() require 'plugins.telescope' end
     }
-    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    use {'nvim-telescope/telescope-dap.nvim' }
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use { 'nvim-telescope/telescope-dap.nvim' }
 
     -- Git stuff
     use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = function()
-        require('neogit').setup{}
-    end}
+        require('neogit').setup {}
+    end }
 
     -- Seamless tmux navigation
     use 'christoomey/vim-tmux-navigator'
@@ -96,15 +98,19 @@ return require('packer').startup(function()
         requires = {
             'kyazdani42/nvim-web-devicons', -- optional, for file icon
         },
-        config = function() require'nvim-tree'.setup {} end,
+        config = function() require 'nvim-tree'.setup {} end,
         tag = 'nightly' -- optional, updated every week. (see issue #1193)
     }
 
-    -- themes
-    use { 'folke/tokyonight.nvim', config = function()
-        vim.cmd[[colorscheme tokyonight]]
+    use {
+        'nvim-lualine/lualine.nvim',
+        config = function() 
+            require('lualine').setup()
     end }
+    -- themes
+    use { 'ray-x/aurora', config = function()
 
+    end }
 end)
 
 -- https://github.com/tomaskallup/dotfiles/tree/master/nvim/lua/plugins
