@@ -46,6 +46,8 @@ plugin-clone $repos
 # handle non-standard plugins
 export PATH="$ZPLUGINDIR/zsh-bench:$PATH"
 
+# Setup zsh-vi-mode to not break stuff
+zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 # source other plugins
 beforeCompInit=(
   powerlevel10k # theme
@@ -87,7 +89,6 @@ plugin-source $afterCompInit
 
 ## Plugin setup
 # requires fzf
-source ~/.fzf.zsh 
 # history substring search bindings
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
