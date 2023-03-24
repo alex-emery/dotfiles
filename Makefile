@@ -1,5 +1,6 @@
 .PHONY: all dotfiles 
 BREW := $(shell command -v brew 2> /dev/null)
+
 all: dotfiles
 
 brew: Brewfile 
@@ -10,11 +11,14 @@ endif
 	$(info "Brew installed bundling...")
 	@brew bundle
 
-dotfiles: brew 
-	@stow alacritty
-	@stow nvim
-	@stow sketchybar 
-	@stow skhd 
-	@stow yabai
-	@stow tmux
-	@stow zsh
+.PHONY: alacritty
+
+alacritty:
+	./helpers/alacritty.sh
+
+applications = alacritty nvim sketchybar skhd yabai tmux zsh
+dotfiles:
+	$(foreach app,$(applications),stow $(app);)
+
+clean:
+	$(foreach app,$(applications),stow -D $(app);)
