@@ -107,7 +107,7 @@ setopt list_ambiguous
 setopt hist_expire_dups_first
 
 alias vim=nvim
-export EDITOR=vim
+export EDITOR=nvim
 
 
 #[ -s "/usr/share/nvm/init-nvm.sh" ] && zsh-defer source /usr/share/nvm/init-nvm.sh
