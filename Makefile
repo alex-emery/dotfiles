@@ -17,7 +17,7 @@ alacritty:
 
 common = alacritty nvim tmux zsh
 macos = yabai sketchybar skhd
-linux = bspwm xhkd rofi
+linux = bspwm sxhkd rofi
 
 OS := $(shell uname)
 ifeq ($(OS), Darwin)
@@ -28,7 +28,7 @@ endif
 
 
 dotfiles: 
-	$(foreach app,$(applications),echo $(app) && stow $(app);)
+	$(foreach app,$(applications),echo stowing $(app) && stow $(app);)
 
 clean:
 	$(foreach app,$(applications),stow -D $(app);)
