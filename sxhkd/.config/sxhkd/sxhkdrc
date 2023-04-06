@@ -16,7 +16,7 @@ super + Escape
 
 # browser
 super + b
-    firefox
+	google-chrome-stable
 #
 # bspwm hotkeys
 #
@@ -151,3 +151,9 @@ XF86AudioPrev
 #Stop
 XF86AudioStop
     playerctl stop
+
+## Screencap selection and put on clipboard
+alt + shift + 4
+	maim -s --format=png | xclip -selection clipboard -t image/png
+
+
