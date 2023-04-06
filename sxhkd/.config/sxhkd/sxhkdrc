@@ -8,7 +8,7 @@ super + Return
 
 # program launcher
 super + @space
-    rofi -show combi
+    ~/.config/rofi/launchers/type-1/launcher.sh
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -16,7 +16,7 @@ super + Escape
 
 # browser
 super + b
-    firefox
+	google-chrome-stable
 #
 # bspwm hotkeys
 #
@@ -122,3 +122,38 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Volume support 
+# Raise volume
+XF86AudioRaiseVolume
+  pactl set-sink-volume @DEFAULT_SINK@ +5%
+ 
+# Lover volume
+XF86AudioLowerVolume
+  pactl set-sink-volume @DEFAULT_SINK@ -5%
+ 
+# Mute
+XF86AudioMute
+  pactl set-sink-mute @DEFAULT_SINK@ toggle
+ 
+# Play
+XF86AudioPlay
+    playerctl play-pause
+ 
+#Next
+XF86AudioNext
+    playerctl next
+ 
+#previous
+XF86AudioPrev
+    playerctl previous
+ 
+#Stop
+XF86AudioStop
+    playerctl stop
+
+## Screencap selection and put on clipboard
+alt + shift + 4
+	maim -s --format=png | xclip -selection clipboard -t image/png
+
+
