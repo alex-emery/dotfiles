@@ -5,6 +5,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+HOST_OS=$(uname -s)
+
+# OS specific sources
+if [[ ${HOST_OS} == "Linux" ]]; then
+  FZF_ZSH="/etc/profile.d/fzf.zsh"
+elif [[ ${HOST_OS} == "Darwin" ]]; then
+  FZF_ZSH="~/.fzf.zsh"
+fi
 source ${HOME}/.zsh_plugins
 
 # set where plugins are cloned to
@@ -47,7 +55,7 @@ plugin-clone $repos
 export PATH="$ZPLUGINDIR/zsh-bench:$PATH"
 
 # Setup zsh-vi-mode to not break stuff
-zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+zvm_after_init_commands+=('[ -f ${FZF_ZSH} ] && source ${FZF_ZSH}')
 # source other plugins
 beforeCompInit=(
   powerlevel10k # theme
@@ -88,9 +96,6 @@ plugin-source $afterCompInit
 
 
 ## Plugin setup
-# requires fzf
-[[ ! -f ~/.fzf.zsh ]] || source ~/.fzf.zsh 
-[[ ! -f /etc/profile.d/fzf.zsh ]] || . /etc/profile.d/fzf.zsh
 # history substring search bindings
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -109,36 +114,28 @@ setopt hist_expire_dups_first
 alias vim=nvim
 export EDITOR=nvim
 
-
-#[ -s "/usr/share/nvm/init-nvm.sh" ] && zsh-defer source /usr/share/nvm/init-nvm.sh
-
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && zsh-defer \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-#[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && zsh-defer \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-#
-
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 export PATH=$PATH:${HOME}/.local/bin
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-    source /usr/share/nvm/nvm.sh
-    source /usr/share/nvm/bash_completion
-    source /usr/share/nvm/install-nvm-exec
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-
-    [ -s "/usr/share/nvm/init-nvm.sh" ] && source /usr/share/nvm/init-nvm.sh
-
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-    [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-    . /opt/homebrew/opt/asdf/libexec/asdf.sh
-    source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
-
-fi
+# Not using NVM
+# if [[ ${HOST_OS} == "Linux" ]]; then
+#     [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+#     source /usr/share/nvm/nvm.sh
+#     source /usr/share/nvm/bash_completion
+#     source /usr/share/nvm/install-nvm-exec
+# elif [[ ${HOST_OS} == "Darwin" ]]; then
+#
+#     [ -s "/usr/share/nvm/init-nvm.sh" ] && source /usr/share/nvm/init-nvm.sh
+#
+#     export NVM_DIR="$HOME/.nvm"
+#     [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+#     [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+#
+#     . /opt/homebrew/opt/asdf/libexec/asdf.sh
+#     source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+# fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
