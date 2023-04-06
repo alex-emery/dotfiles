@@ -1,2 +1,3 @@
 tmux/.config/tmux/plugins/*
+!tmux/.config/tmux/plugins/tpm
 packer_compiled.lua
