@@ -1,4 +1,5 @@
-.PHONY: all dotfiles 
+.PHONY: all dotfiles clean alacritty
+
 BREW := $(shell command -v brew 2> /dev/null)
 
 all: dotfiles
@@ -11,14 +12,23 @@ endif
 	$(info "Brew installed bundling...")
 	@brew bundle
 
-.PHONY: alacritty
-
 alacritty:
 	./helpers/alacritty.sh
 
-applications = alacritty nvim sketchybar skhd yabai tmux zsh
-dotfiles:
-	$(foreach app,$(applications),stow $(app);)
+common = alacritty nvim tmux zsh
+macos = yabai sketchybar skhd
+linux = bspwm xhkd rofi
+
+OS := $(shell uname)
+ifeq ($(OS), Darwin)
+	applications=$(common) $(macos)
+else
+	applications=$(common) $(linux)
+endif
+
+
+dotfiles: 
+	$(foreach app,$(applications),echo $(app) && stow $(app);)
 
 clean:
 	$(foreach app,$(applications),stow -D $(app);)
