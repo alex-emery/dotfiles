@@ -7,12 +7,6 @@ fi
 
 HOST_OS=$(uname -s)
 
-# OS specific sources
-if [[ ${HOST_OS} == "Linux" ]]; then
-  FZF_ZSH="/etc/profile.d/fzf.zsh"
-elif [[ ${HOST_OS} == "Darwin" ]]; then
-  FZF_ZSH="~/.fzf.zsh"
-fi
 source ${HOME}/.zsh_plugins
 
 # set where plugins are cloned to
@@ -54,8 +48,13 @@ plugin-clone $repos
 # handle non-standard plugins
 export PATH="$ZPLUGINDIR/zsh-bench:$PATH"
 
-# Setup zsh-vi-mode to not break stuff
-zvm_after_init_commands+=('[ -f ${FZF_ZSH} ] && source ${FZF_ZSH}')
+# OS specific sources
+if [[ ${HOST_OS} == "Linux" ]]; then
+  zvm_after_init_commands+=('[ -f /etc/profile.d/fzf.zsh ] && source /etc/profile.d/fzf.zsh')
+elif [[ ${HOST_OS} == "Darwin" ]]; then
+  zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+fi
+
 # source other plugins
 beforeCompInit=(
   powerlevel10k # theme
