@@ -2,7 +2,7 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+ source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 HOST_OS=$(uname -s)
@@ -48,6 +48,8 @@ plugin-clone $repos
 # handle non-standard plugins
 export PATH="$ZPLUGINDIR/zsh-bench:$PATH"
 
+ZVM_INIT_MODE=sourcing
+
 # OS specific sources
 if [[ ${HOST_OS} == "Linux" ]]; then
   zvm_after_init_commands+=('[ -f /etc/profile.d/fzf.zsh ] && source /etc/profile.d/fzf.zsh')
@@ -58,37 +60,38 @@ fi
 # source other plugins
 beforeCompInit=(
   powerlevel10k # theme
+  #zsh-defer
   zsh-utils/history
   zsh-utils/completion
   zsh-utils/utility
-  zsh-vi-mode
+  #zsh-vi-mode
     
   ## omz plugins
-  ohmyzsh/plugins/history-substring-search
-  ohmyzsh/plugins/z
+  ohmyzsh/plugins/history-substring-search # says it wants to be called after highlighting
+  ohmyzsh/plugins/z # must be called after compinit for tab
+
+  zsh-defer
   ohmyzsh/plugins/docker
   ohmyzsh/plugins/kubectl
-
 )
 
 plugin-source $beforeCompInit
-
-autoload -Uz compinit
-compinit
+autoload -Uz compinit && compinit
 
 # some stuff in ohmyzsh/lib wants access to compdef...
 # handle non-standard plugins
-for file in $ZPLUGINDIR/ohmyzsh/lib/*.zsh; do
-  source $file
+for _f in $ZPLUGINDIR/ohmyzsh/lib/*.zsh; do
+  source $_f
 done
+unset _f 
 
 
 afterCompInit=(
   fzf-tab # has to be after compinit && before fast-syntax-highlighting and zsh-autosuggestions
 
-  #zsh-defer # everything after this is "deferred". technically not needed with p10k
   fast-syntax-highlighting
   zsh-autosuggestions
+  zsh-vi-mode
 )
 
 plugin-source $afterCompInit
@@ -110,31 +113,16 @@ setopt histignorealldups
 setopt list_ambiguous
 setopt hist_expire_dups_first
 
-alias vim=nvim
+## Exports
 export EDITOR=nvim
-
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-
 export PATH=$PATH:${HOME}/.local/bin
+export GPG_TTY=$TTY
 
-# Not using NVM
-# if [[ ${HOST_OS} == "Linux" ]]; then
-#     [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-#     source /usr/share/nvm/nvm.sh
-#     source /usr/share/nvm/bash_completion
-#     source /usr/share/nvm/install-nvm-exec
-# elif [[ ${HOST_OS} == "Darwin" ]]; then
-#
-#     [ -s "/usr/share/nvm/init-nvm.sh" ] && source /usr/share/nvm/init-nvm.sh
-#
-#     export NVM_DIR="$HOME/.nvm"
-#     [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-#     [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-#
-#     . /opt/homebrew/opt/asdf/libexec/asdf.sh
-#     source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
-# fi
+## Aliases
+alias vim=nvim
+alias aws-dev="aws --profile DeveloperDevelopment --region eu-west-2"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
