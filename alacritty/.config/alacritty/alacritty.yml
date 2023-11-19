@@ -14,16 +14,17 @@ scrolling:
   history: 10000
   multiplier: 3
 font:
+  size: 12
   normal:
-    family: "Liga SFMono Nerd Font"
+    family: "GohuFont 14 Nerd Font Mono"
   bold:
-    family: "Liga SFMono Nerd Font"
+    family: "GohuFont 14 Nerd Font Mono"
     style: Bold
   italic:
-    family: "Liga SFMono Nerd Font"
+    family: "GohuFont 14 Nerd Font Mono"
     style: Italic
   bold_italic:
-    family: "Liga SFMono Nerd Font"
+    family: "GohuFont 14 Nerd Font Mono"
     style: Bold Italic
 
 # Catppuccin!
