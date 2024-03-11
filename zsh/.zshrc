@@ -114,15 +114,29 @@ setopt list_ambiguous
 setopt hist_expire_dups_first
 
 ## Exports
-export EDITOR=nvim
+export EDITOR=vim
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export PATH=$PATH:${HOME}/.local/bin
 export GPG_TTY=$TTY
 
 ## Aliases
+
 alias vim=nvim
 alias aws-dev="aws --profile DeveloperDevelopment --region eu-west-2"
+eval $(thefuck --alias)
+
+
+export WASMTIME_HOME="$HOME/.wasmtime"
+
+export PATH="$WASMTIME_HOME/bin:$PATH"
+
+export PATH="$PATH:/opt/cuda/bin"
+
+export VOLTA_HOME=$HOME/.volta
+
+export PATH=$VOLTA_HOME/bin:$PATH
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
