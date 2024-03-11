@@ -16,7 +16,7 @@ super + Escape
 
 # browser
 super + b
-	google-chrome-stable
+	firefox	
 #
 # bspwm hotkeys
 #
