@@ -2,9 +2,20 @@
 # wm independent hotkeys
 #
 
+## Screencap selection and put on clipboard
+alt + shift + 4
+	maim -s --format=png | xclip -selection clipboard -t image/png
+
+# browser
+super + shift + Return
+	rofi-pass
+
 # terminal emulator
 super + Return
     alacritty 
+
+super + Tab
+	rofi -show window -modi drun, window, run
 
 # program launcher
 super + @space
@@ -13,11 +24,8 @@ super + @space
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
+	notify-send "sxhkd: sxhkd has been restarted."
 
-# browser
-super + b
-	firefox	
-#
 # bspwm hotkeys
 #
 
@@ -151,9 +159,5 @@ XF86AudioPrev
 #Stop
 XF86AudioStop
     playerctl stop
-
-## Screencap selection and put on clipboard
-alt + shift + 4
-	maim -s --format=png | xclip -selection clipboard -t image/png
 
 
